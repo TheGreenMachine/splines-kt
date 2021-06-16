@@ -18,7 +18,7 @@ fun calcSplines(message: String): String {
     } catch (e: Exception) {
         e.printStackTrace()
     }
-    val points: ArrayList<Pose2d> = ArrayList<Pose2d>()
+    val points: ArrayList<Pose2d> = ArrayList()
     for (pointString in message.split(";").toTypedArray()) {
         val pointData = pointString.split(",").toTypedArray()
         val x = if (pointData[0] == "NaN") 0 else pointData[0].toInt()
@@ -27,14 +27,14 @@ fun calcSplines(message: String): String {
         points.add(Pose2d(Translation2d(x.toDouble(), y.toDouble()), Rotation2d.fromDegrees(heading.toDouble())))
     }
     val mQuinticHermiteSplines: ArrayList<QuinticHermiteSpline> =
-        ArrayList<QuinticHermiteSpline>()
-    val mSplines: ArrayList<Spline> = ArrayList<Spline>()
-    val positions: ArrayList<Pose2dWithCurvature> = ArrayList<Pose2dWithCurvature>()
+        ArrayList()
+    val mSplines: ArrayList<Spline> = ArrayList()
+    val positions: ArrayList<Pose2dWithCurvature> = ArrayList()
     if (points.size < 2) {
         return "no"
     } else {
         for (i in 0 until points.size - 1) {
-            mQuinticHermiteSplines.add(QuinticHermiteSpline(points.get(i), points.get(i + 1)))
+            mQuinticHermiteSplines.add(QuinticHermiteSpline(points[i], points[i + 1]))
         }
         QuinticHermiteSpline.optimizeSpline(mQuinticHermiteSplines)
         for (mQuinticHermiteSpline in mQuinticHermiteSplines) {
