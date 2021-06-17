@@ -1,13 +1,14 @@
 package com.team254.lib.geometry
 
 import com.team254.lib.util.Util
+import com.team254.lib.util.format
 
 /**
  * A translation in a 2d coordinate frame. Translations are simply shifts in an (x, y) plane.
  */
-class Translation2d : com.team254.lib.geometry.ITranslation2d<Translation2d?> {
-    protected val x_: Double
-    protected val y_: Double
+class Translation2d : ITranslation2d<Translation2d> {
+    private val x_: Double
+    private val y_: Double
 
     constructor() {
         x_ = 0.0
@@ -66,12 +67,12 @@ class Translation2d : com.team254.lib.geometry.ITranslation2d<Translation2d?> {
      * @param rotation The rotation to apply.
      * @return This translation rotated by rotation.
      */
-    fun rotateBy(rotation: com.team254.lib.geometry.Rotation2d): Translation2d {
+    fun rotateBy(rotation: Rotation2d): Translation2d {
         return Translation2d(x_ * rotation.cos() - y_ * rotation.sin(), x_ * rotation.sin() + y_ * rotation.cos())
     }
 
-    fun direction(): com.team254.lib.geometry.Rotation2d {
-        return com.team254.lib.geometry.Rotation2d(x_, y_, true)
+    fun direction(): Rotation2d {
+        return Rotation2d(x_, y_, true)
     }
 
     /**
@@ -83,7 +84,7 @@ class Translation2d : com.team254.lib.geometry.ITranslation2d<Translation2d?> {
         return Translation2d(-x_, -y_)
     }
 
-    fun interpolate(other: Translation2d, x: Double): Translation2d {
+    override fun interpolate(other: Translation2d, x: Double): Translation2d {
         if (x <= 0) {
             return Translation2d(this)
         } else if (x >= 1) {
@@ -105,13 +106,11 @@ class Translation2d : com.team254.lib.geometry.ITranslation2d<Translation2d?> {
     }
 
     override fun toString(): String {
-        val fmt = DecimalFormat("#0.000")
-        return "(" + fmt.format(x_) + "," + fmt.format(y_) + ")"
+        return "(" + x_.format(3) + "," + y_.format(3) + ")"
     }
 
     override fun toCSV(): String {
-        val fmt = DecimalFormat("#0.000")
-        return fmt.format(x_) + "," + fmt.format(y_)
+        return x_.format(3) + "," + y_.format(3)
     }
 
     override fun distance(other: Translation2d): Double {
@@ -122,11 +121,17 @@ class Translation2d : com.team254.lib.geometry.ITranslation2d<Translation2d?> {
         return if (other == null || other !is Translation2d) false else distance(other) < Util.kEpsilon
     }
 
+    override fun hashCode(): Int {
+        var result = x_.hashCode()
+        result = 31 * result + y_.hashCode()
+        return result
+    }
+
     override val translation: Translation2d
         get() = this
 
     companion object {
-        protected val kIdentity = Translation2d()
+        private val kIdentity = Translation2d()
         fun identity(): Translation2d {
             return kIdentity
         }
@@ -135,11 +140,11 @@ class Translation2d : com.team254.lib.geometry.ITranslation2d<Translation2d?> {
             return a.x_ * b.x_ + a.y_ * b.y_
         }
 
-        fun getAngle(a: Translation2d, b: Translation2d): com.team254.lib.geometry.Rotation2d {
+        fun getAngle(a: Translation2d, b: Translation2d): Rotation2d {
             val cos_angle = dot(a, b) / (a.norm() * b.norm())
-            return if (java.lang.Double.isNaN(cos_angle)) {
-                com.team254.lib.geometry.Rotation2d()
-            } else com.team254.lib.geometry.Rotation2d.Companion.fromRadians(
+            return if (cos_angle.isNaN()) {
+                Rotation2d()
+            } else Rotation2d.fromRadians(
                 kotlin.math.acos(
                     kotlin.math.min(
                         1.0,

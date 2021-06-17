@@ -246,10 +246,8 @@ class QuinticHermiteSpline : Spline {
                     continue
                 }
                 val original = sumDCurvature2(splines)
-                var temp: QuinticHermiteSpline
-                var temp1: QuinticHermiteSpline
-                temp = splines[i]
-                temp1 = splines[i + 1]
+                val temp: QuinticHermiteSpline = splines[i]
+                val temp1: QuinticHermiteSpline = splines[i + 1]
                 controlPoints[i] = ControlPoint() //holds the gradient at a control point
 
                 //calculate partial derivatives of sumDCurvature2

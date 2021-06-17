@@ -25,14 +25,14 @@ object SplineGenerator {
      */
     @JvmOverloads
     fun parameterizeSpline(
-        s: com.team254.lib.spline.Spline,
+        s: Spline,
         maxDx: Double = kMaxDX,
         maxDy: Double = kMaxDY,
         maxDTheta: Double = kMaxDTheta,
         t0: Double = 0.0,
         t1: Double = 1.0
     ): List<Pose2dWithCurvature> {
-        val rv: MutableList<Pose2dWithCurvature> = java.util.ArrayList<Pose2dWithCurvature>()
+        val rv: MutableList<Pose2dWithCurvature> = ArrayList()
         rv.add(s.getPose2dWithCurvature(0.0))
         val dt = t1 - t0
         var t = 0.0
@@ -43,27 +43,26 @@ object SplineGenerator {
         return rv
     }
 
-    fun parameterizeSplines(splines: List<com.team254.lib.spline.Spline>): List<Pose2dWithCurvature> {
+    fun parameterizeSplines(splines: List<Spline>): List<Pose2dWithCurvature> {
         return parameterizeSplines(splines, kMaxDX, kMaxDY, kMaxDTheta)
     }
 
     fun parameterizeSplines(
-        splines: List<com.team254.lib.spline.Spline>, maxDx: Double, maxDy: Double,
+        splines: List<Spline>, maxDx: Double, maxDy: Double,
         maxDTheta: Double
     ): List<Pose2dWithCurvature> {
-        val rv: MutableList<Pose2dWithCurvature> = java.util.ArrayList<Pose2dWithCurvature>()
+        val rv: MutableList<Pose2dWithCurvature> = ArrayList()
         if (splines.isEmpty()) return rv
         rv.add(splines[0].getPose2dWithCurvature(0.0))
         for (s in splines) {
             val samples = parameterizeSpline(s, maxDx, maxDy, maxDTheta)
-            samples.removeAt(0)
-            rv.addAll(samples)
+            rv.addAll(samples.drop(1))
         }
         return rv
     }
 
     private fun getSegmentArc(
-        s: com.team254.lib.spline.Spline, rv: MutableList<Pose2dWithCurvature>, t0: Double, t1: Double, maxDx: Double,
+        s: Spline, rv: MutableList<Pose2dWithCurvature>, t0: Double, t1: Double, maxDx: Double,
         maxDy: Double,
         maxDTheta: Double
     ) {

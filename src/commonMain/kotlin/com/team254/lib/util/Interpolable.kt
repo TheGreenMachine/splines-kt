@@ -7,7 +7,7 @@ package com.team254.lib.util
  * @param <T> The Type of Interpolable
  * @see InterpolatingTreeMap
 </T> */
-interface Interpolable<T> {
+interface Interpolable<T: Any> {
     /**
      * Interpolates between this value and an other value according to a given parameter. If x is 0, the method should
      * return this value. If x is 1, the method should return the other value. If 0 < x < 1, the return value should be

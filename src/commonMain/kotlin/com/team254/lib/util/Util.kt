@@ -1,6 +1,7 @@
 package com.team254.lib.util
 
 import kotlin.jvm.JvmOverloads
+import kotlin.math.PI
 
 /**
  * Contains basic functions that are used often.
@@ -53,3 +54,13 @@ object Util {
         return result
     }
 }
+
+fun toDegrees(radians: Double): Double {
+    return radians * (180.0 / PI)
+}
+
+fun toRadians(degrees: Double): Double {
+    return degrees * (PI / 180.0)
+}
+
+expect fun Double.format(places: Int): String

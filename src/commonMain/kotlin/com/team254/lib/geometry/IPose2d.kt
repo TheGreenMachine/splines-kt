@@ -1,7 +1,7 @@
 package com.team254.lib.geometry
 
-interface IPose2d<S> : com.team254.lib.geometry.IRotation2d<S>, com.team254.lib.geometry.ITranslation2d<S> {
-    val pose: com.team254.lib.geometry.Pose2d
-    fun transformBy(transform: com.team254.lib.geometry.Pose2d): S
+interface IPose2d<S: Any> : IRotation2d<S>, ITranslation2d<S> {
+    val pose: Pose2d
+    fun transformBy(transform: Pose2d): S
     fun mirror(): S
 }

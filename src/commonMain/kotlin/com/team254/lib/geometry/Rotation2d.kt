@@ -1,6 +1,10 @@
 package com.team254.lib.geometry
 
 import com.team254.lib.util.Util
+import com.team254.lib.util.Util.kEpsilon
+import com.team254.lib.util.format
+import com.team254.lib.util.toDegrees
+import com.team254.lib.util.toRadians
 import kotlin.jvm.JvmOverloads
 
 /**
@@ -9,9 +13,9 @@ import kotlin.jvm.JvmOverloads
  *
  * Inspired by Sophus (https://github.com/strasdat/Sophus/tree/master/sophus)
  */
-class Rotation2d : com.team254.lib.geometry.IRotation2d<Rotation2d?> {
-    protected val cos_angle_: Double
-    protected val sin_angle_: Double
+class Rotation2d : IRotation2d<Rotation2d> {
+    private val cos_angle_: Double
+    private val sin_angle_: Double
 
     @JvmOverloads
     constructor(x: Double = 1.0, y: Double = 0.0, normalize: Boolean = false) {
@@ -37,12 +41,11 @@ class Rotation2d : com.team254.lib.geometry.IRotation2d<Rotation2d?> {
         sin_angle_ = other.sin_angle_
     }
 
-    constructor(direction: com.team254.lib.geometry.Translation2d, normalize: Boolean) : this(
+    constructor(direction: Translation2d, normalize: Boolean) : this(
         direction.x(),
         direction.y(),
         normalize
-    ) {
-    }
+    )
 
     fun cos(): Double {
         return cos_angle_
@@ -65,7 +68,7 @@ class Rotation2d : com.team254.lib.geometry.IRotation2d<Rotation2d?> {
     val radians: Double
         get() = kotlin.math.atan2(sin_angle_, cos_angle_)
     val degrees: Double
-        get() = kotlin.math.toDegrees(radians)
+        get() = toDegrees(radians)
 
     /**
      * We can rotate this Rotation2d by adding together the effects of it and another rotation.
@@ -95,18 +98,18 @@ class Rotation2d : com.team254.lib.geometry.IRotation2d<Rotation2d?> {
 
     fun isParallel(other: Rotation2d): Boolean {
         return Util.epsilonEquals(
-            com.team254.lib.geometry.Translation2d.Companion.cross(
+            Translation2d.cross(
                 toTranslation(),
                 other.toTranslation()
             ), 0.0
         )
     }
 
-    fun toTranslation(): com.team254.lib.geometry.Translation2d {
-        return com.team254.lib.geometry.Translation2d(cos_angle_, sin_angle_)
+    fun toTranslation(): Translation2d {
+        return Translation2d(cos_angle_, sin_angle_)
     }
 
-    fun interpolate(other: Rotation2d, x: Double): Rotation2d {
+    override fun interpolate(other: Rotation2d, x: Double): Rotation2d {
         if (x <= 0) {
             return Rotation2d(this)
         } else if (x >= 1) {
@@ -117,13 +120,11 @@ class Rotation2d : com.team254.lib.geometry.IRotation2d<Rotation2d?> {
     }
 
     override fun toString(): String {
-        val fmt = DecimalFormat("#0.000")
-        return "(" + fmt.format(degrees) + " deg)"
+        return "(" + degrees.format(3) + " deg)"
     }
 
     override fun toCSV(): String {
-        val fmt = DecimalFormat("#0.000")
-        return fmt.format(degrees)
+        return degrees.format(3)
     }
 
     override fun distance(other: Rotation2d): Double {
@@ -131,14 +132,20 @@ class Rotation2d : com.team254.lib.geometry.IRotation2d<Rotation2d?> {
     }
 
     override fun equals(other: Any?): Boolean {
-        return if (other == null || other !is Rotation2d) false else distance(other) < Util.kEpsilon
+        return if (other == null || other !is Rotation2d) false else distance(other) < kEpsilon
+    }
+
+    override fun hashCode(): Int {
+        var result = cos_angle_.hashCode()
+        result = 31 * result + sin_angle_.hashCode()
+        return result
     }
 
     override val rotation: Rotation2d
         get() = this
 
     companion object {
-        protected val kIdentity = Rotation2d()
+        private val kIdentity = Rotation2d()
         fun identity(): Rotation2d {
             return kIdentity
         }
@@ -148,7 +155,7 @@ class Rotation2d : com.team254.lib.geometry.IRotation2d<Rotation2d?> {
         }
 
         fun fromDegrees(angle_degrees: Double): Rotation2d {
-            return fromRadians(kotlin.math.toRadians(angle_degrees))
+            return fromRadians(toRadians(angle_degrees))
         }
     }
 }

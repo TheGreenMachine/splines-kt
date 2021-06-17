@@ -1,6 +1,8 @@
 package com.team254.lib.geometry
 
 import com.team254.lib.util.Util
+import com.team254.lib.util.format
+import com.team254.lib.util.toDegrees
 
 /**
  * A movement along an arc at constant curvature and velocity. We can use ideas from "differential calculus" to create
@@ -27,12 +29,11 @@ class Twist2d(
     }
 
     override fun toString(): String {
-        val fmt = DecimalFormat("#0.000")
-        return "(" + fmt.format(dx) + "," + fmt.format(dy) + "," + fmt.format(kotlin.math.toDegrees(dtheta)) + " deg)"
+        return "(${dx.format(3)},${dy.format(3)},${toDegrees(dtheta).format(3)} deg)"
     }
 
     companion object {
-        protected val kIdentity = Twist2d(0.0, 0.0, 0.0)
+        private val kIdentity = Twist2d(0.0, 0.0, 0.0)
         fun identity(): Twist2d {
             return kIdentity
         }

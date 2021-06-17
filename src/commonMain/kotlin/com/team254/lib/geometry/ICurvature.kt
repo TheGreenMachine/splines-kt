@@ -1,6 +1,6 @@
 package com.team254.lib.geometry
 
-interface ICurvature<S> : com.team254.lib.geometry.State<S> {
+interface ICurvature<S: Any> : State<S> {
     val curvature: Double
     val dCurvatureDs: Double
 }
