@@ -51,8 +51,8 @@ class Pose2dWithCurvature : IPose2d<Pose2dWithCurvature>,
     override val pose: Pose2d
         get() = pose_
 
-    override fun transformBy(transform: Pose2d): Pose2dWithCurvature {
-        return Pose2dWithCurvature(pose.transformBy(transform), curvature, dCurvatureDs)
+    override fun transformBy(other: Pose2d): Pose2dWithCurvature {
+        return Pose2dWithCurvature(pose.transformBy(other), curvature, dCurvatureDs)
     }
 
     override fun mirror(): Pose2dWithCurvature {
