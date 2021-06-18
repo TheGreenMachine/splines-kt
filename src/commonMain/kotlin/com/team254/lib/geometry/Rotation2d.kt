@@ -110,6 +110,24 @@ class Rotation2d : IRotation2d<Rotation2d> {
         return Translation2d(cos_angle_, sin_angle_)
     }
 
+    /**
+     * Based on Team 1323's method of the same name.
+     *
+     * @return Rotation2d representing the angle of the nearest axis to the angle in standard position
+     */
+    fun nearestPole(): Rotation2d {
+        val pole_sin: Double
+        val pole_cos: Double
+        if (kotlin.math.abs(cos_angle_) > kotlin.math.abs(sin_angle_)) {
+            pole_cos = kotlin.math.sign(cos_angle_)
+            pole_sin = 0.0
+        } else {
+            pole_cos = 0.0
+            pole_sin = kotlin.math.sign(sin_angle_)
+        }
+        return Rotation2d(pole_cos, pole_sin, false)
+    }
+
     override fun interpolate(other: Rotation2d, x: Double): Rotation2d {
         if (x <= 0) {
             return Rotation2d(this)
