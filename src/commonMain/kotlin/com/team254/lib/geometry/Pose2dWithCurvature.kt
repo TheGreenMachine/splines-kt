@@ -1,7 +1,7 @@
 package com.team254.lib.geometry
 
-import com.team254.lib.util.Util
-import com.team254.lib.util.format
+import com.team254.lib.splinesutil.Util
+import com.team254.lib.splinesutil.format
 import kotlin.jvm.JvmStatic
 
 class Pose2dWithCurvature : IPose2d<Pose2dWithCurvature>,

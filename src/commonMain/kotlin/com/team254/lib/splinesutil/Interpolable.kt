@@ -1,4 +1,4 @@
-package com.team254.lib.util
+package com.team254.lib.splinesutil
 
 /**
  * Interpolable is an interface used by an Interpolating Tree as the Value type. Given two end points and an

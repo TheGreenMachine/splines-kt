@@ -1,4 +1,4 @@
-package com.team254.lib.util
+package com.team254.lib.splinesutil
 
 import kotlin.jvm.JvmOverloads
 import kotlin.math.PI

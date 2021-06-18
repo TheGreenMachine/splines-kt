@@ -1,10 +1,10 @@
 package com.team254.lib.geometry
 
-import com.team254.lib.util.Util
-import com.team254.lib.util.Util.kEpsilon
-import com.team254.lib.util.format
-import com.team254.lib.util.toDegrees
-import com.team254.lib.util.toRadians
+import com.team254.lib.splinesutil.Util
+import com.team254.lib.splinesutil.Util.kEpsilon
+import com.team254.lib.splinesutil.format
+import com.team254.lib.splinesutil.toDegrees
+import com.team254.lib.splinesutil.toRadians
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 
