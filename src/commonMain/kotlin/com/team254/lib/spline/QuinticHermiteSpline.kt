@@ -3,6 +3,7 @@ package com.team254.lib.spline
 import com.team254.lib.geometry.Pose2d
 import com.team254.lib.geometry.Rotation2d
 import com.team254.lib.geometry.Translation2d
+import kotlin.jvm.JvmStatic
 
 class QuinticHermiteSpline : Spline {
     private var x0: Double
@@ -202,6 +203,7 @@ class QuinticHermiteSpline : Spline {
         /**
          * @return integral of dCurvature^2 over the length of multiple splines
          */
+        @JvmStatic
         fun sumDCurvature2(splines: List<QuinticHermiteSpline>): Double {
             var sum = 0.0
             for (s in splines) {
@@ -217,6 +219,7 @@ class QuinticHermiteSpline : Spline {
          * @param splines the list of splines to optimize
          * @return the final sumDCurvature2
          */
+        @JvmStatic
         fun optimizeSpline(splines: MutableList<QuinticHermiteSpline>): Double {
             var count = 0
             var prev = sumDCurvature2(splines)

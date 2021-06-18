@@ -6,6 +6,7 @@ import com.team254.lib.util.format
 import com.team254.lib.util.toDegrees
 import com.team254.lib.util.toRadians
 import kotlin.jvm.JvmOverloads
+import kotlin.jvm.JvmStatic
 
 /**
  * A rotation in a 2d coordinate frame represented a point on the unit circle (cosine and sine).
@@ -146,14 +147,18 @@ class Rotation2d : IRotation2d<Rotation2d> {
 
     companion object {
         private val kIdentity = Rotation2d()
+
+        @JvmStatic
         fun identity(): Rotation2d {
             return kIdentity
         }
 
+        @JvmStatic
         fun fromRadians(angle_radians: Double): Rotation2d {
             return Rotation2d(kotlin.math.cos(angle_radians), kotlin.math.sin(angle_radians), false)
         }
 
+        @JvmStatic
         fun fromDegrees(angle_degrees: Double): Rotation2d {
             return fromRadians(toRadians(angle_degrees))
         }

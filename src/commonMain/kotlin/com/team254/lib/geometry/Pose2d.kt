@@ -135,15 +135,20 @@ class Pose2d : IPose2d<Pose2d> {
 
     companion object {
         private val kIdentity = Pose2d()
+
+        @JvmStatic
         fun identity(): Pose2d {
             return kIdentity
         }
 
         private const val kEps = 1E-9
+
+        @JvmStatic
         fun fromTranslation(translation: Translation2d): Pose2d {
             return Pose2d(translation, Rotation2d())
         }
 
+        @JvmStatic
         fun fromRotation(rotation: Rotation2d): Pose2d {
             return Pose2d(Translation2d(), rotation)
         }
@@ -152,6 +157,7 @@ class Pose2d : IPose2d<Pose2d> {
          * Obtain a new Pose2d from a (constant curvature) velocity. See:
          * https://github.com/strasdat/Sophus/blob/master/sophus/se2.hpp
          */
+        @JvmStatic
         fun exp(delta: Twist2d): Pose2d {
             val sin_theta: Double = kotlin.math.sin(delta.dtheta)
             val cos_theta: Double = kotlin.math.cos(delta.dtheta)

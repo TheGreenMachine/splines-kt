@@ -3,6 +3,7 @@ package com.team254.lib.geometry
 import com.team254.lib.util.Util
 import com.team254.lib.util.format
 import com.team254.lib.util.toDegrees
+import kotlin.jvm.JvmStatic
 
 /**
  * A movement along an arc at constant curvature and velocity. We can use ideas from "differential calculus" to create
@@ -34,6 +35,8 @@ class Twist2d(
 
     companion object {
         private val kIdentity = Twist2d(0.0, 0.0, 0.0)
+
+        @JvmStatic
         fun identity(): Twist2d {
             return kIdentity
         }

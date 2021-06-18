@@ -2,6 +2,7 @@ package com.team254.lib.geometry
 
 import com.team254.lib.util.Util
 import com.team254.lib.util.format
+import kotlin.jvm.JvmStatic
 
 /**
  * A translation in a 2d coordinate frame. Translations are simply shifts in an (x, y) plane.
@@ -132,14 +133,18 @@ class Translation2d : ITranslation2d<Translation2d> {
 
     companion object {
         private val kIdentity = Translation2d()
+
+        @JvmStatic
         fun identity(): Translation2d {
             return kIdentity
         }
 
+        @JvmStatic
         fun dot(a: Translation2d, b: Translation2d): Double {
             return a.x_ * b.x_ + a.y_ * b.y_
         }
 
+        @JvmStatic
         fun getAngle(a: Translation2d, b: Translation2d): Rotation2d {
             val cos_angle = dot(a, b) / (a.norm() * b.norm())
             return if (cos_angle.isNaN()) {
@@ -154,6 +159,7 @@ class Translation2d : ITranslation2d<Translation2d> {
             )
         }
 
+        @JvmStatic
         fun cross(a: Translation2d, b: Translation2d): Double {
             return a.x_ * b.y_ - a.y_ * b.x_
         }

@@ -6,6 +6,7 @@ import com.team254.lib.geometry.Pose2dWithCurvature
 import com.team254.lib.geometry.Rotation2d
 import com.team254.lib.geometry.Translation2d
 import kotlin.jvm.JvmOverloads
+import kotlin.jvm.JvmStatic
 
 object SplineGenerator {
     private const val kMaxDX = 2.0 //inches
@@ -24,6 +25,7 @@ object SplineGenerator {
      * Convenience function to parametrize a spline from t 0 to 1
      */
     @JvmOverloads
+    @JvmStatic
     fun parameterizeSpline(
         s: Spline,
         maxDx: Double = kMaxDX,
@@ -43,10 +45,12 @@ object SplineGenerator {
         return rv
     }
 
+    @JvmStatic
     fun parameterizeSplines(splines: List<Spline>): List<Pose2dWithCurvature> {
         return parameterizeSplines(splines, kMaxDX, kMaxDY, kMaxDTheta)
     }
 
+    @JvmStatic
     fun parameterizeSplines(
         splines: List<Spline>, maxDx: Double, maxDy: Double,
         maxDTheta: Double
