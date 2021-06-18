@@ -2,6 +2,7 @@ package com.team254.lib.geometry
 
 import com.team254.lib.util.Util
 import com.team254.lib.util.format
+import kotlin.jvm.JvmStatic
 
 class Pose2dWithCurvature : IPose2d<Pose2dWithCurvature>,
     ICurvature<Pose2dWithCurvature> {
@@ -101,6 +102,8 @@ class Pose2dWithCurvature : IPose2d<Pose2dWithCurvature>,
 
     companion object {
         private val kIdentity = Pose2dWithCurvature()
+
+        @JvmStatic
         fun identity(): Pose2dWithCurvature {
             return kIdentity
         }

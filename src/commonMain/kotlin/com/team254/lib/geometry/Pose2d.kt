@@ -23,6 +23,10 @@ class Pose2d : IPose2d<Pose2d> {
         rotation_ = rotation
     }
 
+    constructor(x: Double, y: Double, rotation: Double): this(
+        x, y, Rotation2d.fromDegrees(rotation)
+    )
+
     constructor(translation: Translation2d, rotation: Rotation2d) {
         translation_ = translation
         rotation_ = rotation

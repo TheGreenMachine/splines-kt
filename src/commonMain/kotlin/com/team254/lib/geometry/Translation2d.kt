@@ -139,6 +139,17 @@ class Translation2d : ITranslation2d<Translation2d> {
             return kIdentity
         }
 
+        /**
+         * fromPolar courtesy 1323
+         * @param direction
+         * @param magnitude
+         * @return
+         */
+        @JvmStatic
+        fun fromPolar(direction: Rotation2d, magnitude: Double): Translation2d {
+            return Translation2d(direction.cos() * magnitude, direction.sin() * magnitude)
+        }
+
         @JvmStatic
         fun dot(a: Translation2d, b: Translation2d): Double {
             return a.x_ * b.x_ + a.y_ * b.y_

@@ -13,8 +13,9 @@ import kotlin.jvm.JvmStatic
  * A Twist can be used to represent a difference between two poses, a velocity, an acceleration, etc.
  */
 class Twist2d(
-    val dx: Double, val dy: Double, // Radians!
-    val dtheta: Double
+    public val dx: Double,
+    public val dy: Double,
+    public val dtheta: Double // Radians!
 ) {
     fun scaled(scale: Double): Twist2d {
         return Twist2d(dx * scale, dy * scale, dtheta * scale)
