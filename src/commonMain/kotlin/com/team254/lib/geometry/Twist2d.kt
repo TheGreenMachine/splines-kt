@@ -3,6 +3,7 @@ package com.team254.lib.geometry
 import com.team254.lib.util.Util
 import com.team254.lib.util.format
 import com.team254.lib.util.toDegrees
+import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
 
 /**
@@ -13,9 +14,12 @@ import kotlin.jvm.JvmStatic
  * A Twist can be used to represent a difference between two poses, a velocity, an acceleration, etc.
  */
 class Twist2d(
-    public val dx: Double,
-    public val dy: Double,
-    public val dtheta: Double // Radians!
+    @get:JvmName("dx")
+    val dx: Double,
+    @get:JvmName("dy")
+    val dy: Double,
+    @get:JvmName("dtheta")
+    val dtheta: Double // Radians!
 ) {
     fun scaled(scale: Double): Twist2d {
         return Twist2d(dx * scale, dy * scale, dtheta * scale)

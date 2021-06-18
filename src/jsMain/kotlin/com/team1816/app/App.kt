@@ -10,6 +10,7 @@ import com.team254.lib.spline.SplineGenerator
 
 external fun decodeURIComponent(encodedURI: String): String
 
+@ExperimentalJsExport
 fun calcSplines(message: String): String {
     var message = message
     message = message.substring(0, message.length - 1)
