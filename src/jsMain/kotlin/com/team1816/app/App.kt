@@ -11,21 +11,11 @@ import com.team254.lib.spline.SplineGenerator
 external fun decodeURIComponent(encodedURI: String): String
 
 @ExperimentalJsExport
-fun calcSplines(message: String): String {
-    var message = message
-    message = message.substring(0, message.length - 1)
-    try {
-        message = decodeURIComponent(message)
-    } catch (e: Exception) {
-        e.printStackTrace()
-    }
-    val points: ArrayList<Pose2d> = ArrayList()
-    for (pointString in message.split(";").toTypedArray()) {
-        val pointData = pointString.split(",").toTypedArray()
-        val x = if (pointData[0] == "NaN") 0 else pointData[0].toInt()
-        val y = if (pointData[1] == "NaN") 0 else pointData[1].toInt()
-        val heading = if (pointData[2] == "NaN") 0 else pointData[2].toInt()
-        points.add(Pose2d(Translation2d(x.toDouble(), y.toDouble()), Rotation2d.fromDegrees(heading.toDouble())))
+@JsExport
+@JsName("calcSplines")
+fun calcSplines(pointData: Array<DoubleArray>): String {
+    val points = pointData.map { point ->
+        Pose2d(point[0], point[1], point[2])
     }
     val mQuinticHermiteSplines: ArrayList<QuinticHermiteSpline> =
         ArrayList()
