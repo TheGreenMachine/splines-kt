@@ -1,9 +1,5 @@
-package com.team1816.app
-
 import com.team254.lib.geometry.Pose2d
 import com.team254.lib.geometry.Pose2dWithCurvature
-import com.team254.lib.geometry.Rotation2d
-import com.team254.lib.geometry.Translation2d
 import com.team254.lib.spline.QuinticHermiteSpline
 import com.team254.lib.spline.Spline
 import com.team254.lib.spline.SplineGenerator

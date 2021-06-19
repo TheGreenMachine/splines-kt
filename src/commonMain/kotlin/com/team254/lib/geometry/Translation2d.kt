@@ -2,11 +2,15 @@ package com.team254.lib.geometry
 
 import com.team254.lib.splinesutil.Util
 import com.team254.lib.splinesutil.format
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 import kotlin.jvm.JvmStatic
 
 /**
  * A translation in a 2d coordinate frame. Translations are simply shifts in an (x, y) plane.
  */
+@ExperimentalJsExport
+@JsExport
 class Translation2d : ITranslation2d<Translation2d> {
     private val x_: Double
     private val y_: Double

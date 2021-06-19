@@ -5,6 +5,8 @@ import com.team254.lib.splinesutil.Util.kEpsilon
 import com.team254.lib.splinesutil.format
 import com.team254.lib.splinesutil.toDegrees
 import com.team254.lib.splinesutil.toRadians
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 
@@ -14,6 +16,8 @@ import kotlin.jvm.JvmStatic
  *
  * Inspired by Sophus (https://github.com/strasdat/Sophus/tree/master/sophus)
  */
+@ExperimentalJsExport
+@JsExport
 class Rotation2d : IRotation2d<Rotation2d> {
     private val cos_angle_: Double
     private val sin_angle_: Double

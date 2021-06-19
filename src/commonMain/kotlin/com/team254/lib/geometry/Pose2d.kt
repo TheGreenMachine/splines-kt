@@ -1,6 +1,8 @@
 package com.team254.lib.geometry
 
 import com.team254.lib.splinesutil.Util
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 import kotlin.jvm.JvmStatic
 
 /**
@@ -9,6 +11,8 @@ import kotlin.jvm.JvmStatic
  *
  * Inspired by Sophus (https://github.com/strasdat/Sophus/tree/master/sophus)
  */
+@ExperimentalJsExport
+@JsExport
 class Pose2d : IPose2d<Pose2d> {
     private val translation_: Translation2d
     private val rotation_: Rotation2d
