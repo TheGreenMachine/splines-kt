@@ -9,10 +9,7 @@ external fun decodeURIComponent(encodedURI: String): String
 @ExperimentalJsExport
 @JsExport
 @JsName("calcSplines")
-fun calcSplines(pointData: Array<DoubleArray>): String {
-    val points = pointData.map { point ->
-        Pose2d(point[0], point[1], point[2])
-    }
+fun calcSplines(points: Array<Pose2d>): String {
     val mQuinticHermiteSplines: ArrayList<QuinticHermiteSpline> =
         ArrayList()
     val mSplines: ArrayList<Spline> = ArrayList()

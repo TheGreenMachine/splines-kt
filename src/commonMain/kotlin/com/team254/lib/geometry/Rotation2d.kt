@@ -7,7 +7,7 @@ import com.team254.lib.splinesutil.toDegrees
 import com.team254.lib.splinesutil.toRadians
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
-import kotlin.jvm.JvmOverloads
+import kotlin.js.JsName
 import kotlin.jvm.JvmStatic
 
 /**
@@ -18,12 +18,15 @@ import kotlin.jvm.JvmStatic
  */
 @ExperimentalJsExport
 @JsExport
-class Rotation2d : IRotation2d<Rotation2d> {
+class Rotation2d(
+    x: Double = 1.0,
+    y: Double = 0.0,
+    normalize: Boolean = false
+) : IRotation2d<Rotation2d> {
     private val cos_angle_: Double
     private val sin_angle_: Double
 
-    @JvmOverloads
-    constructor(x: Double = 1.0, y: Double = 0.0, normalize: Boolean = false) {
+    init {
         if (normalize) {
             // From trig, we know that sin^2 + cos^2 == 1, but as we do math on this object we might accumulate rounding errors.
             // Normalizing forces us to re-scale the sin and cos to reset rounding errors.
@@ -41,11 +44,13 @@ class Rotation2d : IRotation2d<Rotation2d> {
         }
     }
 
-    constructor(other: Rotation2d) {
-        cos_angle_ = other.cos_angle_
-        sin_angle_ = other.sin_angle_
-    }
+    @JsName("copyOf")
+    constructor(other: Rotation2d) : this(
+        other.cos_angle_,
+        other.sin_angle_
+    )
 
+    @JsName("fromTranslation")
     constructor(direction: Translation2d, normalize: Boolean) : this(
         direction.x(),
         direction.y(),

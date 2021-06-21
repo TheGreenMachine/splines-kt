@@ -3,6 +3,7 @@ package com.team254.lib.geometry
 import com.team254.lib.splinesutil.Util
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
+import kotlin.js.JsName
 import kotlin.jvm.JvmStatic
 
 /**
@@ -13,33 +14,27 @@ import kotlin.jvm.JvmStatic
  */
 @ExperimentalJsExport
 @JsExport
-class Pose2d : IPose2d<Pose2d> {
-    private val translation_: Translation2d
-    private val rotation_: Rotation2d
+class Pose2d(
+    private val translation_ : Translation2d = Translation2d(),
+    private val rotation_ : Rotation2d = Rotation2d()
+) : IPose2d<Pose2d> {
 
-    constructor() {
-        translation_ = Translation2d()
-        rotation_ = Rotation2d()
-    }
+    @JsName("fromXYRotation")
+    constructor(x: Double, y: Double, rotation: Rotation2d) : this(
+        Translation2d(x, y),
+        rotation
+    )
 
-    constructor(x: Double, y: Double, rotation: Rotation2d) {
-        translation_ = Translation2d(x, y)
-        rotation_ = rotation
-    }
-
+    @JsName("fromTriple")
     constructor(x: Double, y: Double, rotation: Double): this(
         x, y, Rotation2d.fromDegrees(rotation)
     )
 
-    constructor(translation: Translation2d, rotation: Rotation2d) {
-        translation_ = translation
-        rotation_ = rotation
-    }
-
-    constructor(other: Pose2d) {
-        translation_ = Translation2d(other.translation_)
-        rotation_ = Rotation2d(other.rotation_)
-    }
+    @JsName("copyOf")
+    constructor(other: Pose2d) : this(
+        Translation2d(other.translation_),
+        Rotation2d(other.rotation_)
+    )
 
     override val translation: Translation2d
         get() = translation_
@@ -139,6 +134,12 @@ class Pose2d : IPose2d<Pose2d> {
 
     override fun mirror(): Pose2d {
         return Pose2d(Translation2d(translation.x(), -translation.y()), rotation.inverse())
+    }
+
+    override fun hashCode(): Int {
+        var result = translation_.hashCode()
+        result = 31 * result + rotation_.hashCode()
+        return result
     }
 
     companion object {

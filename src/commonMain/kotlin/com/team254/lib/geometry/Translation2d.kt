@@ -4,6 +4,7 @@ import com.team254.lib.splinesutil.Util
 import com.team254.lib.splinesutil.format
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
+import kotlin.js.JsName
 import kotlin.jvm.JvmStatic
 
 /**
@@ -11,29 +12,22 @@ import kotlin.jvm.JvmStatic
  */
 @ExperimentalJsExport
 @JsExport
-class Translation2d : ITranslation2d<Translation2d> {
-    private val x_: Double
-    private val y_: Double
+class Translation2d(
+    private val x: Double,
+    private val y: Double
+) : ITranslation2d<Translation2d> {
 
-    constructor() {
-        x_ = 0.0
-        y_ = 0.0
-    }
+    @JsName("identity")
+    constructor() : this(0.0, 0.0)
 
-    constructor(x: Double, y: Double) {
-        x_ = x
-        y_ = y
-    }
+    @JsName("copyOf")
+    constructor(other: Translation2d) : this(other.x, other.y)
 
-    constructor(other: Translation2d) {
-        x_ = other.x_
-        y_ = other.y_
-    }
-
-    constructor(start: Translation2d, end: Translation2d) {
-        x_ = end.x_ - start.x_
-        y_ = end.y_ - start.y_
-    }
+    @JsName("delta")
+    constructor(start: Translation2d, end: Translation2d) : this(
+        x = end.x - start.x,
+        y = end.y - start.y
+    )
 
     /**
      * The "norm" of a transform is the Euclidean distance in x and y.
@@ -41,19 +35,19 @@ class Translation2d : ITranslation2d<Translation2d> {
      * @return sqrt(x ^ 2 + y ^ 2)
      */
     fun norm(): Double {
-        return kotlin.math.hypot(x_, y_)
+        return kotlin.math.hypot(x, y)
     }
 
     fun norm2(): Double {
-        return x_ * x_ + y_ * y_
+        return x * x + y * y
     }
 
     fun x(): Double {
-        return x_
+        return x
     }
 
     fun y(): Double {
-        return y_
+        return y
     }
 
     /**
@@ -63,7 +57,7 @@ class Translation2d : ITranslation2d<Translation2d> {
      * @return The combined effect of translating by this object and the other.
      */
     fun translateBy(other: Translation2d): Translation2d {
-        return Translation2d(x_ + other.x_, y_ + other.y_)
+        return Translation2d(x + other.x, y + other.y)
     }
 
     /**
@@ -73,11 +67,11 @@ class Translation2d : ITranslation2d<Translation2d> {
      * @return This translation rotated by rotation.
      */
     fun rotateBy(rotation: Rotation2d): Translation2d {
-        return Translation2d(x_ * rotation.cos() - y_ * rotation.sin(), x_ * rotation.sin() + y_ * rotation.cos())
+        return Translation2d(x * rotation.cos() - y * rotation.sin(), x * rotation.sin() + y * rotation.cos())
     }
 
     fun direction(): Rotation2d {
-        return Rotation2d(x_, y_, true)
+        return Rotation2d(x, y, true)
     }
 
     /**
@@ -86,7 +80,7 @@ class Translation2d : ITranslation2d<Translation2d> {
      * @return Translation by -x and -y.
      */
     fun inverse(): Translation2d {
-        return Translation2d(-x_, -y_)
+        return Translation2d(-x, -y)
     }
 
     override fun interpolate(other: Translation2d, x: Double): Translation2d {
@@ -99,11 +93,11 @@ class Translation2d : ITranslation2d<Translation2d> {
     }
 
     fun extrapolate(other: Translation2d, x: Double): Translation2d {
-        return Translation2d(x * (other.x_ - x_) + x_, x * (other.y_ - y_) + y_)
+        return Translation2d(x * (other.x - x) + x, x * (other.y - y) + y)
     }
 
     fun scale(s: Double): Translation2d {
-        return Translation2d(x_ * s, y_ * s)
+        return Translation2d(x * s, y * s)
     }
 
     fun epsilonEquals(other: Translation2d, epsilon: Double): Boolean {
@@ -111,11 +105,11 @@ class Translation2d : ITranslation2d<Translation2d> {
     }
 
     override fun toString(): String {
-        return "(" + x_.format(3) + "," + y_.format(3) + ")"
+        return "(" + x.format(3) + "," + y.format(3) + ")"
     }
 
     override fun toCSV(): String {
-        return x_.format(3) + "," + y_.format(3)
+        return x.format(3) + "," + y.format(3)
     }
 
     override fun distance(other: Translation2d): Double {
@@ -127,8 +121,8 @@ class Translation2d : ITranslation2d<Translation2d> {
     }
 
     override fun hashCode(): Int {
-        var result = x_.hashCode()
-        result = 31 * result + y_.hashCode()
+        var result = x.hashCode()
+        result = 31 * result + y.hashCode()
         return result
     }
 
@@ -156,7 +150,7 @@ class Translation2d : ITranslation2d<Translation2d> {
 
         @JvmStatic
         fun dot(a: Translation2d, b: Translation2d): Double {
-            return a.x_ * b.x_ + a.y_ * b.y_
+            return a.x * b.x + a.y * b.y
         }
 
         @JvmStatic
@@ -176,7 +170,7 @@ class Translation2d : ITranslation2d<Translation2d> {
 
         @JvmStatic
         fun cross(a: Translation2d, b: Translation2d): Double {
-            return a.x_ * b.y_ - a.y_ * b.x_
+            return a.x * b.y - a.y * b.x
         }
     }
 }

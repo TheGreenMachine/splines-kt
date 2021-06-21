@@ -1,5 +1,8 @@
 package com.team254.lib.splinesutil
 
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
+import kotlin.js.JsName
 import kotlin.jvm.JvmOverloads
 import kotlin.math.PI
 
@@ -55,10 +58,14 @@ object Util {
     }
 }
 
+@ExperimentalJsExport
+@JsName("toDegrees")
 fun toDegrees(radians: Double): Double {
     return radians * (180.0 / PI)
 }
 
+@ExperimentalJsExport
+@JsName("toRadians")
 fun toRadians(degrees: Double): Double {
     return degrees * (PI / 180.0)
 }

@@ -51,6 +51,11 @@ kotlin {
                 implementation kotlin('test-annotations-common')
             }
         }
+        all {
+            languageSettings {
+                useExperimentalAnnotation('kotlin.js.ExperimentalJsExport')
+            }
+        }
     }
 }
 test {
